@@ -2,20 +2,20 @@ package com.lmy.withning.pojo.entity;
 
 import lombok.Data;
 
-import java.math.BigInteger;
 import java.time.LocalDateTime;
 
 @Data
-public class Task {
+public class TaskSubmit {
     private Integer id;
+    private Integer userId;
     private String title;
     private String description;
     private Integer type;
     private Integer rewardPoints;
     private LocalDateTime deadline;
-    private String imageUrl;
-    private Long userId;
     private Integer status;
+    private Integer taskId;
     private LocalDateTime createTime;
     private LocalDateTime updateTime;
 }
+

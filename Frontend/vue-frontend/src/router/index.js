@@ -98,10 +98,17 @@ router.beforeEach(async (to, from, next) => {
   }
 
   if (to.meta.requiresAdmin) {
+    console.log('Checking admin permission for route:', to.path);
     try {
-      await adminAPI.checkAdmin();
-      next();
+      const res = await adminAPI.checkAdmin();
+      console.log('Admin check response:', res);
+      if (res.code === 1 || res.data === true || res.success === true) {
+        next();
+      } else {
+        throw new Error('不是管理员');
+      }
     } catch (error) {
+      console.log('Admin check failed:', error.message);
       alert('您没有管理员权限，无法访问该页面');
       next({ name: 'Home' });
     }

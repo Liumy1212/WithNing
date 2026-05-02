@@ -12,13 +12,13 @@ public class LoginInterceptor implements HandlerInterceptor {
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-//        HttpSession session = request.getSession(false);
-//        if (session != null) {
-//            User user = (User) session.getAttribute("user");
-//            if (user != null) {
-//                UserContextHolder.setUser(user);
-//            }
-//        }
+        HttpSession session = request.getSession(false);
+        if (session != null) {
+            User user = (User) session.getAttribute("user");
+            if (user != null) {
+                UserContextHolder.setUser(user);
+            }
+        }
 
         return true;
     }

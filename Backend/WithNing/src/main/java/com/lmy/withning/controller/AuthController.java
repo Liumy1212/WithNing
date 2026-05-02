@@ -25,7 +25,7 @@ public class AuthController {
     public Result login(@RequestBody UserDto userDto, HttpSession session){
         log.info("用户登录");
         UserVo userVo = authService.login(userDto);
-//        session.setAttribute("user", UserContextHolder.getUser());
+        session.setAttribute("user", UserContextHolder.getUser());
         log.info("当前用户：{}",UserContextHolder.getUser());
         return Result.success(userVo);
     }
