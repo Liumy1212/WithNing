@@ -1,0 +1,27 @@
+# 公网部署配置文件
+# 使用此配置替代 application.yml 进行公网部署
+
+spring:
+  application:
+    name: WithNing
+  datasource:
+    # 重要：请将此地址替换为您的公网服务器地址或内网穿透地址
+    # 如果使用内网穿透（如ngrok、frp），地址格式类似：ngrok分配的地址
+    url: jdbc:mysql://YOUR_PUBLIC_IP_OR_DOMAIN:3306/withning?useUnicode=true&characterEncoding=utf8&serverTimezone=Asia/Shanghai
+    username: root
+    password: YOUR_DATABASE_PASSWORD
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+server:
+  port: 8080
+  address: 0.0.0.0  # 绑定到所有网络接口，允许外部访问
+
+mybatis:
+  configuration:
+    map-underscore-to-camel-case: true
+
+# 重要安全提示：
+# 1. 数据库密码请使用强密码
+# 2. 建议使用云数据库而非本地数据库
+# 3. 生产环境建议使用HTTPS
+# 4. 建议配置防火墙规则限制访问

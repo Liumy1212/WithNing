@@ -36,4 +36,18 @@ public class AuthController {
         UserContextHolder.remove();
         return Result.success();
     }
+    
+    @PostMapping("/register")
+    public Result register(@RequestBody UserDto userDto){
+        log.info("用户注册");
+        UserVo userVo = authService.register(userDto);
+        return Result.success(userVo);
+    }
+    
+    @GetMapping("/userinfo")
+    public Result getUserInfo(){
+        log.info("获取用户信息");
+        UserVo userVo = authService.getUserInfo();
+        return Result.success(userVo);
+    }
 }

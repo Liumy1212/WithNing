@@ -26,4 +26,36 @@ public class AuthServiceImpl implements AuthService {
         BeanUtils.copyProperties(user,userVo);
         return userVo;
     }
+    
+    @Override
+    public UserVo register(UserDto userDto) {
+        // 检查用户名是否已存在
+        User existUser = authMapper.findByUsername(userDto.getUsername());
+        if (existUser != null) {
+            throw new RuntimeException("用户名已存在");
+        }
+        
+        User user = new User();
+        BeanUtils.copyProperties(userDto, user);
+        authMapper.register(user);
+        
+        // 重新查询获取完整信息
+        User newUser = authMapper.findByUsername(userDto.getUsername());
+        UserContextHolder.setUser(newUser);
+        
+        UserVo userVo = new UserVo();
+        BeanUtils.copyProperties(newUser, userVo);
+        return userVo;
+    }
+    
+    @Override
+    public UserVo getUserInfo() {
+        User user = UserContextHolder.getUser();
+        if (user == null) {
+            throw new RuntimeException("用户未登录");
+        }
+        UserVo userVo = new UserVo();
+        BeanUtils.copyProperties(user, userVo);
+        return userVo;
+    }
 }

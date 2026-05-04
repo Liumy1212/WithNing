@@ -51,11 +51,25 @@ public class TasksController {
         return Result.success();
     }
 
+    @DeleteMapping("/{taskId}")
+    public Result deleteTask(@PathVariable Long taskId){
+        log.info("删除任务");
+        tasksService.deleteTask(taskId);
+        return Result.success();
+    }
+
     @PostMapping("/publish/apply")
     public Result nadd(@RequestBody TaskDto taskDto){
         log.info("普通用户发布任务");
-        tasksService.nadd(new TaskDto());
+        tasksService.nadd(taskDto);
         return Result.success();
+    }
+
+    @GetMapping("/publish/my-applies")
+    public Result myPublishApplies(){
+        log.info("获取我的发布申请");
+        List<Task> list = tasksService.myPublishApplies();
+        return Result.success(list);
     }
 
     @PostMapping("/apply/{taskId}")

@@ -38,7 +38,7 @@ public class TasksServiceImpl implements TasksService {
         log.info("管理员添加任务");
         Task task = new Task();
         BeanUtils.copyProperties(taskDto, task);
-        task.setUserId(Long.valueOf(UserContextHolder.getUser().getId()));
+        task.setPublisherId(UserContextHolder.getUser().getId());
         task.setStatus(1);
         task.setCreateTime(LocalDateTime.now());
         tasksMapper.add(task);
@@ -54,7 +54,7 @@ public class TasksServiceImpl implements TasksService {
         log.info("普通用户添加任务");
         Task task = new Task();
         BeanUtils.copyProperties(taskDto, task);
-        task.setUserId(Long.valueOf(UserContextHolder.getUser().getId()));
+        task.setPublisherId(UserContextHolder.getUser().getId());
         task.setStatus(2);
         task.setCreateTime(LocalDateTime.now());
         tasksMapper.add(task);
@@ -67,7 +67,7 @@ public class TasksServiceImpl implements TasksService {
         TaskSubmit taskSubmit = new TaskSubmit();
         BeanUtils.copyProperties(task, taskSubmit);
         taskSubmit.setUserId(UserContextHolder.getUser().getId());
-        taskSubmit.setTaskId(taskId.intValue());  // 添加这行
+        taskSubmit.setTaskId(taskId.intValue());
         taskSubmit.setStatus(2);
         taskSubmit.setCreateTime(LocalDateTime.now());
         taskSubmit.setUpdateTime(LocalDateTime.now());
@@ -85,6 +85,19 @@ public class TasksServiceImpl implements TasksService {
             list2.add(taskSubmitVo);
         }
         return list2;
+    }
+    
+    @Override
+    public void deleteTask(Long taskId) {
+        log.info("删除任务");
+        tasksMapper.deleteTask(taskId);
+    }
+    
+    @Override
+    public List<Task> myPublishApplies() {
+        log.info("获取我的发布申请");
+        Integer userId = UserContextHolder.getUser().getId();
+        return tasksMapper.myPublishApplies(userId);
     }
 
 }

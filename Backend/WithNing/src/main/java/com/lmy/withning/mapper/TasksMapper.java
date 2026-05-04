@@ -3,6 +3,7 @@ package com.lmy.withning.mapper;
 import com.lmy.withning.pojo.entity.Task;
 import com.lmy.withning.pojo.entity.TaskSubmit;
 import com.lmy.withning.pojo.vo.TaskSubmitVo;
+import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
@@ -19,7 +20,7 @@ public interface TasksMapper {
     @Select("SELECT t.* FROM task t WHERE t.type = 2 AND t.status = 1 AND NOT EXISTS (SELECT 1 FROM task_submit ts WHERE ts.user_id = #{userId} AND ts.task_id = t.id)")
     List<Task> stage(Long userId);
 
-    @Insert("insert into task(title, description, type, reward_points, deadline, image_url, publisher_id, status, create_time, update_time) values(#{title}, #{description}, #{type}, #{rewardPoints}, #{deadline}, #{imageUrl}, #{userId}, #{status}, #{createTime}, #{updateTime})")
+    @Insert("insert into task(title, description, type, reward_points, deadline, image_url, publisher_id, status, create_time, update_time) values(#{title}, #{description}, #{type}, #{rewardPoints}, #{deadline}, #{imageUrl}, #{publisherId}, #{status}, #{createTime}, #{updateTime})")
     void add(Task task);
 
     @Select("select * from task where id = #{taskId}")
@@ -30,4 +31,10 @@ public interface TasksMapper {
 
     @Select("select * from task_submit where user_id = #{userId}")
     List<TaskSubmit> myApplies(Integer userId);
+    
+    @Delete("delete from task where id = #{taskId}")
+    void deleteTask(Long taskId);
+    
+    @Select("select * from task where publisher_id = #{userId} and status in (2, 3)")
+    List<Task> myPublishApplies(Integer userId);
 }

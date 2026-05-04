@@ -2,7 +2,6 @@ package com.lmy.withning.pojo.entity;
 
 import lombok.Data;
 
-import java.math.BigInteger;
 import java.time.LocalDateTime;
 
 @Data
@@ -14,7 +13,7 @@ public class Task {
     private Integer rewardPoints;
     private LocalDateTime deadline;
     private String imageUrl;
-    private Long userId;
+    private Integer publisherId;
     private Integer status;
     private LocalDateTime createTime;
     private LocalDateTime updateTime;

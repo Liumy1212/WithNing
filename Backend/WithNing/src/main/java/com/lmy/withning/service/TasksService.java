@@ -21,4 +21,8 @@ public interface TasksService {
     void apply(Long taskId);
 
     List<TaskSubmitVo> myApplies();
+    
+    void deleteTask(Long taskId);
+    
+    List<Task> myPublishApplies();
 }
