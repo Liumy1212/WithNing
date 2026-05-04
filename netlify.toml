@@ -1,0 +1,14 @@
+[build]
+  command = "cd Frontend/vue-frontend && npm install && npm run build"
+  publish = "Frontend/vue-frontend/dist"
+
+[build.environment]
+  NODE_VERSION = "18"
+
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
+
+[context.production.environment]
+  VUE_APP_API_BASE_URL = "https://awry-regulate-unfitting.ngrok-free.dev/api"
