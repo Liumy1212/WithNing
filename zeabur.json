@@ -1,0 +1,11 @@
+{
+  "build": {
+    "command": "cd Frontend/vue-frontend && npm install && npm run build",
+    "output": "Frontend/vue-frontend/dist"
+  },
+  "env": {
+    "VUE_APP_API_BASE_URL": {
+      "value": "https://awry-regulate-unfitting.ngrok-free.dev/api"
+    }
+  }
+}
